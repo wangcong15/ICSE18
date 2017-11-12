@@ -209,10 +209,10 @@ def get_vsnprintf_param(func_cursor):
 
 # 处理单个文件
 def handle_file(file_path):
-	global file_number
-	file_number += 1
-	print "----[", file_number, "]----"
-	print file_path
+	# global file_number
+	# file_number += 1
+	# print "----[", file_number, "]----"
+	# print file_path
 
 	# 1. fprintf
 	index = clang.cindex.Index.create()
@@ -274,6 +274,9 @@ def handle_file(file_path):
 		if file_path != child.location.file.name:
 			continue
 		insert_array += get_vsnprintf_param(child)
+
+	# IMPORTANT: combine arrays 
+	return insert_array 
 
 	new_file_path = ""
 	if len(insert_array) > 0:

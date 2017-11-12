@@ -30,7 +30,8 @@ def find_rec(new_cursor):
 		parent_node = parent_stack[-1].get_children()
 		for i in range(get_length(parent_stack[-1])):
 			param_node = parent_node.next()
-		attr2 = param_node.location.line + 1
+		if 'param_node' in locals().keys():
+			attr2 = param_node.location.line + 1
 	elif new_cursor.kind == clang.cindex.CursorKind.CALL_EXPR and new_cursor.displayname == function_name:
 		result.append([attr1, attr2])
 	new_cursor_stmts = new_cursor.get_children()
@@ -52,10 +53,10 @@ def get_rec_param(func_cursor):
 
 # 处理单个文件
 def handle_file(file_path):
-	global file_number
-	file_number += 1
-	print "----[", file_number, "]----"
-	print file_path
+	# global file_number
+	# file_number += 1
+	# print "----[", file_number, "]----"
+	# print file_path
 	
 	insert_array = []
 	# cmr
@@ -67,6 +68,10 @@ def handle_file(file_path):
 		if file_path != child.location.file.name:
 			continue
 		insert_array += get_rec_param(child)
+
+	# IMPORTANT: combine arrays 
+	return insert_array 
+
 	new_file_path = ""
 	if len(insert_array) > 0:
 		global assert_file_number

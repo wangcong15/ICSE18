@@ -77,10 +77,11 @@ def get_malloc_param(func_cursor):
 # 处理单个文件
 def handle_file(file_path):
 	replace_sizet(file_path)
-	global file_number
-	file_number += 1
-	print "----[", file_number, "]----"
-	print file_path
+	# global file_number
+	# file_number += 1
+	# print "----[", file_number, "]----"
+	# print file_path
+	
 	# malloc
 	index = clang.cindex.Index.create()
 	translation_unit = index.parse(file_path, ['-x', 'c++', '-std=c++11'])
@@ -101,6 +102,9 @@ def handle_file(file_path):
 		if file_path != child.location.file.name:
 			continue
 		insert_array += get_new_param(child)
+
+	# IMPORTANT: combine arrays 
+	return insert_array 
 
 	new_file_path = ""
 	if len(insert_array) > 0:

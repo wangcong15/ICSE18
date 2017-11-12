@@ -38,17 +38,20 @@ def write_new_file(file_path, new_file_path, insert_asserts, need_smack=False):
 # 根据SourceRange变量获得源码
 def get_src_from_sr(sr):
 	if type(sr) == clang.cindex.SourceRange:
-		start_pos = sr.start.offset
-		end_pos = sr.end.offset
-		text_file = sr.start.file.name
 		try:
-			f = open(text_file, "r")
-			f.seek(start_pos, 0)  
-			text_read = f.read(end_pos - start_pos)  
-			f.close()  
-		except Exception, e:
+			start_pos = sr.start.offset
+			end_pos = sr.end.offset
+			text_file = sr.start.file.name
+			try:
+				f = open(text_file, "r")
+				f.seek(start_pos, 0)  
+				text_read = f.read(end_pos - start_pos)  
+				f.close()  
+			except Exception, e:
+				return ""
+			return text_read
+		except Exception as e:
 			return ""
-		return text_read
 	else:
 		return ""
 
