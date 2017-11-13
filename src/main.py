@@ -8,7 +8,7 @@ import defect_match_CWE674
 import defect_match_CWE690
 import defect_match_CWE789
 import defect_match_CWE835
-from common_lib import write_new_file
+from common_lib import write_new_file, smack_verification
 
 def handle_dir(dir_path):
 	if dir_path.find("linux-master") > 0:
@@ -41,13 +41,13 @@ def handle_file(file_path):
 		insert_array += defect_match_CWE835.handle_file(file_path)
 
 	new_file_path = ""
-	if len(insert_array) > 0:
-		print file_path
-		new_file_path = file_path + ".bak.c"
-		write_result = write_new_file(file_path, new_file_path, insert_array, False)
-	# if os.path.isfile(new_file_path):
-	# 	verify_result = smack_verification(new_file_path)
-	# 	verify_result = -1
+	# if len(insert_array) > 0:
+	print file_path
+	new_file_path = file_path + ".bak.c"
+	write_result = write_new_file(file_path, new_file_path, insert_array, needVerify)
+	if os.path.isfile(new_file_path):
+		verify_result = smack_verification(new_file_path)
+		print verify_result
 	# 	if verify_result == 0:
 	# 		global assert_false_count
 	# 		assert_false_count += 1

@@ -101,15 +101,16 @@ def get_case_value(switch_children):
 def smack_verification(new_file_path):
 	# print 'smack ' + new_file_path
 	(status, output) = commands.getstatusoutput('smack ' + new_file_path)
-	output_array = output.split("\n")  
-	last_line_output = output_array[-1]
+	# output_array = output.split("\n")  
+	# last_line_output = output_array[-1]
 	# print last_line_output
-	if last_line_output == "SMACK found an error.":
-		return 0
-	elif last_line_output == "SMACK found no errors with unroll bound 1.":
-		return 1
-	else:
-		return -1
+	return output
+	# if last_line_output == "SMACK found an error.":
+	# 	return 0
+	# elif last_line_output == "SMACK found no errors with unroll bound 1.":
+	# 	return 1
+	# else:
+	# 	return -1
 
 # 得到node子结点的数量
 def get_length(node):
